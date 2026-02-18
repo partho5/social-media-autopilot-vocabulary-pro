@@ -5,7 +5,8 @@ __pycache__/
 *.pyo
 output/
 logs/
-data/
+data/state.json
+data/fb_tokens.json
 fonts/
 *.pid
 
