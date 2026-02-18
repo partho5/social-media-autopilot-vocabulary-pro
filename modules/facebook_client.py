@@ -238,8 +238,8 @@ def _load_hashtags() -> str:
     from modules.config import HASHTAGS_FILE
     if HASHTAGS_FILE.exists():
         with open(HASHTAGS_FILE, "r", encoding="utf-8") as f:
-            tags = [line.strip() for line in f if line.strip() and not line.startswith("#")]
-        return "\n" + " ".join(tags)
+            tags = [line.strip() for line in f if line.strip()]
+        return "\n\n" + " ".join(tags)
     logger.warning("Hashtags file not found at %s. Posting without hashtags.", HASHTAGS_FILE)
     return ""
 

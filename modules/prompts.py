@@ -32,7 +32,7 @@ Today's word: {word}
 - Show the word's meaning through action, not just definition
 - Keep it flowing and alive, not formal or robotic
 
-After the Bengali story, add a blank line then write exactly 2 English sentences using the word naturally. Put them under this header (on its own line): 📝 English examples:
+After the Bengali story, add a blank line then write exactly 2 English sentences with line gap, using the word naturally. Put them under this header (on its own line): 📝 English examples:
 """
 
 
