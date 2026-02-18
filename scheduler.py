@@ -26,7 +26,7 @@ from apscheduler.triggers.cron import CronTrigger
 
 # ── Settings ──────────────────────────────────────────────────────────────────
 TIMEZONE = "Asia/Dhaka"
-POSTING_TIMES = ["8", "12", "18", "20"]   # hours (24 h clock) in Asia/Dhaka
+POSTING_TIMES = ["6", "8", "10", "16", "20", "23"]   # hours (24 h clock) in Asia/Dhaka
 
 _PORT = int(os.getenv("PORT", "8000"))
 _WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET", "")
