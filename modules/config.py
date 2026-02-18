@@ -52,7 +52,7 @@ LOGS_DIR: Path = _ROOT / "logs"
 # ─── App settings ──────────────────────────────────────────────────────────────
 WEBHOOK_SECRET: str = _optional("WEBHOOK_SECRET")
 LOG_LEVEL: str = _optional("LOG_LEVEL", "INFO").upper()
-PORT: int = int(_optional("PORT", "8000"))
+PORT: int = int(_optional("PORT", "8002"))
 
 # Ensure directories exist
 for _d in [OUTPUT_DIR, FONTS_DIR, LOGS_DIR, _ROOT / "data"]:

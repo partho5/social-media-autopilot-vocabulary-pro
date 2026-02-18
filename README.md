@@ -106,7 +106,7 @@ cp .env.example .env
 | `FB_PAGE_ID` | Yes | Facebook Page ID to post to |
 | `WEBHOOK_SECRET` | No | Optional secret header for the webhook endpoint |
 | `LOG_LEVEL` | No | `DEBUG` / `INFO` (default) / `WARNING` / `ERROR` |
-| `PORT` | No | FastAPI port (default `8000`) |
+| `PORT` | No | FastAPI port (default `8002`) |
 
 ### Switching text provider
 
@@ -198,18 +198,18 @@ This will:
 
 ```bash
 # Without secret
-curl -X POST http://localhost:8000/webhook/trigger
+curl -X POST http://localhost:${PORT:-8002}/webhook/trigger
 
 # With secret
-curl -X POST http://localhost:8000/webhook/trigger \
+curl -X POST http://localhost:${PORT:-8002}/webhook/trigger \
      -H "X-Webhook-Secret: your_secret"
 ```
 
 ### Health & status
 
 ```bash
-curl http://localhost:8000/health
-curl http://localhost:8000/status
+curl http://localhost:${PORT:-8002}/health
+curl http://localhost:${PORT:-8002}/status
 ```
 
 ---

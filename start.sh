@@ -12,7 +12,7 @@ PID_FILE="$SCRIPT_DIR/vocab_pro.pid"
 SCHED_PID_FILE="$SCRIPT_DIR/scheduler.pid"
 LOG_FILE="$SCRIPT_DIR/logs/startup.log"
 SCHED_LOG_FILE="$SCRIPT_DIR/logs/scheduler.log"
-PORT="${PORT:-8000}"
+PORT="${PORT:-8002}"
 
 cd "$SCRIPT_DIR"
 

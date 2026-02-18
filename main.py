@@ -7,7 +7,7 @@ Endpoints:
   GET  /status                   – word tracker + last run info
 
 Cron example (every day at 8 AM):
-  0 8 * * * curl -s -X POST http://localhost:8000/webhook/trigger \
+  0 8 * * * curl -s -X POST http://localhost:${PORT:-8002}/webhook/trigger \
              -H "X-Webhook-Secret: your_secret" >> /var/log/vocab_pro.log 2>&1
 """
 

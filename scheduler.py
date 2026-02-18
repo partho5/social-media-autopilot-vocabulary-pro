@@ -28,7 +28,7 @@ from apscheduler.triggers.cron import CronTrigger
 TIMEZONE = "Asia/Dhaka"
 POSTING_TIMES = ["6", "8", "10", "16", "20", "23"]   # hours (24 h clock) in Asia/Dhaka
 
-_PORT = int(os.getenv("PORT", "8000"))
+_PORT = int(os.getenv("PORT", "8002"))
 _WEBHOOK_SECRET = os.getenv("WEBHOOK_SECRET", "")
 _TRIGGER_URL = f"http://localhost:{_PORT}/webhook/trigger"
 
