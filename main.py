@@ -89,7 +89,7 @@ def _run_workflow() -> dict:
 
     # Step 3 – Generate image prompt
     log_step("Step 3: Generating image prompt…")
-    image_prompt = generate_image_prompt(post_text)
+    image_prompt = generate_image_prompt(post_text, word)
     if not image_prompt:
         raise RuntimeError("generate_image_prompt() returned empty string.")
     log_step(f"Step 3 done: prompt length={len(image_prompt)}")

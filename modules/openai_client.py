@@ -156,15 +156,17 @@ def generate_post_text(word: str) -> str:
     return _apply_unicode_bold(raw.strip())
 
 
-def generate_image_prompt(post_text: str) -> str:
+def generate_image_prompt(post_text: str, word: str) -> str:
     """
-    Generate an image-generation prompt from the post text.
+    Generate an image-generation prompt from the post text and word.
     Always uses GPT-4o mini.
     """
     if not post_text or not post_text.strip():
         raise ValueError("'post_text' must be a non-empty string.")
+    if not word or not word.strip():
+        raise ValueError("'word' must be a non-empty string.")
 
     system = IMAGE_PROMPT_SYSTEM_PROMPT
-    user = IMAGE_PROMPT_USER_PROMPT.format(post_text=post_text.strip())
+    user = IMAGE_PROMPT_USER_PROMPT.format(word=word.strip(), post_text=post_text.strip())
 
     return _call_gpt(system, user, "generate_image_prompt").strip()
