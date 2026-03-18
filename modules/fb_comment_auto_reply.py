@@ -44,14 +44,17 @@ FB_REPLY_PORT = int(os.getenv("FB_REPLY_PORT", "8003"))
 
 # ── Reply behaviour defaults (edit here to customise) ─────────────────────────
 DEFAULT_SYSTEM_PROMPT = (
-    "You are the admin of 'Vocabulary Pro', a Facebook page that helps people learn English vocabulary through engaging daily posts.\n\n"
-    "Your goal is to reply to comments in a way that:\n"
-    "1. Acknowledges what the commenter said genuinely — show you read their comment\n"
-    "2. Connects their comment back to the word or topic in the post\n"
-    "3. Encourages them to keep practicing vocabulary — subtly, not pushy\n"
-    "4. Feels human, warm, and conversational — not robotic or salesy\n"
-    "5. Keeps the reply short (2-3 sentences max)\n\n"
-    "Mention and inspire practice vocabulary from 'Vocabulary Pro' app directly when feels natural.\n"
+    "You manage the Facebook page for 'Vocabulary Pro' — a mobile app built for serious English learners preparing for IELTS, TOEFL, GRE, GMAT, or competitive job interviews.\n\n"
+    "Your persona: a pedantic vocabulary coach. Precise, exacting, and deeply invested in exam-level word mastery. "
+    "You notice word choice the way an examiner would. You reward accuracy and correct vagueness — always with a clear reason.\n\n"
+    "When replying to a comment:\n"
+    "1. Pick up on the specific word(s) or idea the commenter used — acknowledge it at the level of an examiner, not a cheerleader. *Reply in same language as the comment*\n"
+    "2. Connect it to what exam candidates actually need: collocations, register, band-score impact, or how this word appears in GRE/IELTS/GMAT contexts\n"
+    "3. Make them feel that mastering this word gives them a real edge — in the exam room or the boardroom\n"
+    "4. Let the 'Vocabulary Pro' app come up naturally as the tool serious candidates use — never forced, never salesy\n\n"
+    "The goal of every reply: the reader thinks 'this app is exactly what I need for my exam/career.'\n"
+    "Tone: sharp, knowledgeable, encouraging in a high-standards way — like a coach who believes in them but won't lower the bar.\n"
+    "Keep the reply to 2-3 sentences. Be dense with value, not with words.\n"
     "Reply in the same language as the commenter.\n"
     "If the reply has more than one sentence, separate sentences with a newline (\\n) where it feels natural."
 )
@@ -149,6 +152,21 @@ def get_comment_parent(comment_id: str) -> Optional[dict]:
 
     parent_id = data["parent"]["id"]
     return get_comment_details(parent_id)
+
+
+def react_to_comment(comment_id: str, reaction_type: str = "LOVE") -> bool:
+    """React to a comment with a Facebook reaction. Returns True on success."""
+    token = get_page_token()
+    url = f"{GRAPH_API}/{comment_id}/reactions"
+    data = {"type": reaction_type, "access_token": token}
+
+    try:
+        response = requests.post(url, data=data)
+        response.raise_for_status()
+        return True
+    except Exception as e:
+        logger.warning(f"Failed to react to comment {comment_id}: {e}")
+        return False
 
 
 def post_comment_reply(comment_id: str, message: str) -> str:
@@ -334,6 +352,9 @@ def handle_comment_webhook(
 
         logger.info(f"Generated reply: {reply_text[:100]}...")
         result["reply_text"] = reply_text
+
+        # React with LOVE before replying
+        react_to_comment(comment_id, reaction_type="LOVE")
 
         # Post the reply
         reply_id = post_comment_reply(comment_id, reply_text)
