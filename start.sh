@@ -66,6 +66,9 @@ SCHED_PID=$!
 echo "$SCHED_PID" > "$SCHED_PID_FILE"
 echo "  Scheduler started (PID $SCHED_PID). Logs: $SCHED_LOG_FILE"
 
+# ── Start comment auto-reply server ──────────────────────────────────────────
+bash "$SCRIPT_DIR/start_comment_reply.sh"
+
 echo ""
 echo "Health check: curl http://localhost:$PORT/health"
 echo "Status:       curl http://localhost:$PORT/status"
