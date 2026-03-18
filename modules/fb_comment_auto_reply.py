@@ -417,12 +417,6 @@ if __name__ == "__main__":
                 logger.info("Skipping own comment to prevent loop")
                 return jsonify({"status": "skipped – own comment"}), 200
 
-            # Skip comments on posts not owned by this page
-            post_id = value.get("post_id", "")
-            if not post_id.startswith(page_id):
-                logger.info(f"Skipping comment on external post: {post_id}")
-                return jsonify({"status": "skipped – external post"}), 200
-
             # Process the comment
             result = handle_comment_webhook(
                 event_data=value,
