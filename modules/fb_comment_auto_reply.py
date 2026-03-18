@@ -409,6 +409,12 @@ if __name__ == "__main__":
                 logger.info(f"Skipping non-comment event: verb={value.get('verb')} item={value.get('item')}")
                 return jsonify({"status": "skipped"}), 200
 
+            # Skip comments made by the page itself to prevent infinite loop
+            page_id = os.getenv("FB_PAGE_ID", "")
+            if value.get("from", {}).get("id") == page_id:
+                logger.info("Skipping own comment to prevent loop")
+                return jsonify({"status": "skipped – own comment"}), 200
+
             # Process the comment
             result = handle_comment_webhook(
                 event_data=value,
