@@ -285,12 +285,13 @@ def handle_comment_webhook(
 
         logger.info(f"Processing comment: {comment_id}")
 
-        # Fetch full comment details
-        comment = get_comment_details(comment_id)
-        comment_text = comment.get("message", "")
+        # Use message directly from webhook payload — no extra API call needed
+        comment_text = event_data.get("message", "")
 
         if not comment_text:
-            raise ValueError(f"Comment {comment_id} has no message text")
+            logger.info(f"Comment {comment_id} has no text (sticker/image) – skipping")
+            result["status"] = "skipped"
+            return result
 
         logger.info(f"Comment text: {comment_text[:100]}...")
 
