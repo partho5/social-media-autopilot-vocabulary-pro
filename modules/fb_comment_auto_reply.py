@@ -154,21 +154,6 @@ def get_comment_parent(comment_id: str) -> Optional[dict]:
     return get_comment_details(parent_id)
 
 
-def react_to_comment(comment_id: str, reaction_type: str = "LOVE") -> bool:
-    """React to a comment with a Facebook reaction. Returns True on success."""
-    token = get_page_token()
-    url = f"{GRAPH_API}/{comment_id}/reactions"
-    data = {"type": reaction_type, "access_token": token}
-
-    try:
-        response = requests.post(url, data=data)
-        response.raise_for_status()
-        return True
-    except Exception as e:
-        logger.warning(f"Failed to react to comment {comment_id}: {e}")
-        return False
-
-
 def post_comment_reply(comment_id: str, message: str) -> str:
     """Post a reply to a comment. Returns the new comment ID."""
     token = get_page_token()
@@ -352,9 +337,6 @@ def handle_comment_webhook(
 
         logger.info(f"Generated reply: {reply_text[:100]}...")
         result["reply_text"] = reply_text
-
-        # React with LOVE before replying
-        react_to_comment(comment_id, reaction_type="LOVE")
 
         # Post the reply
         reply_id = post_comment_reply(comment_id, reply_text)
