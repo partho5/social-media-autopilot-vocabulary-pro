@@ -184,8 +184,8 @@ def generate_reply(
 
     client = OpenAI(api_key=OPENAI_API_KEY)
 
-    # Build context-aware message
-    messages = []
+    # Build context-aware messages
+    messages = [{"role": "system", "content": system_prompt}]
 
     if post_content:
         messages.append({
@@ -207,7 +207,6 @@ def generate_reply(
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=messages,
-        system=system_prompt,
         max_tokens=150,
         temperature=0.7,
     )
@@ -396,18 +395,26 @@ if __name__ == "__main__":
                 return jsonify({"error": "Invalid signature"}), 403
 
             data = request.get_json()
+            logger.info(f"Webhook payload: {data}")
 
-            # Extract optional parameters (use .env defaults if not provided)
-            system_prompt = data.get("system_prompt", DEFAULT_SYSTEM_PROMPT)
-            include_parent = data.get("include_parent_comment", DEFAULT_INCLUDE_PARENT)
-            include_post = data.get("include_post_context", DEFAULT_INCLUDE_POST)
+            # Parse Meta's envelope: entry[0].changes[0].value
+            try:
+                value = data["entry"][0]["changes"][0]["value"]
+            except (KeyError, IndexError):
+                logger.warning("Unexpected payload structure, skipping")
+                return jsonify({"status": "skipped"}), 200
+
+            # Only process new comments, skip edits/deletes/other events
+            if value.get("verb") != "add" or value.get("item") != "comment":
+                logger.info(f"Skipping non-comment event: verb={value.get('verb')} item={value.get('item')}")
+                return jsonify({"status": "skipped"}), 200
 
             # Process the comment
             result = handle_comment_webhook(
-                event_data=data,
-                system_prompt=system_prompt,
-                include_parent_comment=include_parent,
-                include_post_context=include_post,
+                event_data=value,
+                system_prompt=DEFAULT_SYSTEM_PROMPT,
+                include_parent_comment=DEFAULT_INCLUDE_PARENT,
+                include_post_context=DEFAULT_INCLUDE_POST,
             )
 
             status_code = 200 if result["status"] == "success" else 400
