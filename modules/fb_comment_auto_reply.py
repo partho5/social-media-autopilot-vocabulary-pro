@@ -53,7 +53,7 @@ DEFAULT_SYSTEM_PROMPT = (
     "5. Keeps the reply short (2-3 sentences max)\n\n"
     "Never mention 'Vocabulary Pro app' directly. Let the engagement speak for itself.\n"
     "Reply in the same language as the commenter.\n"
-    "If the reply is more than one sentence, separate each sentence with a line break where it feels natural."
+    "If the reply has more than one sentence, put each sentence on its own line."
 )
 DEFAULT_INCLUDE_PARENT = True   # include parent comment context when replying to a reply
 DEFAULT_INCLUDE_POST = True     # include post content for context
