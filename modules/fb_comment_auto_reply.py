@@ -51,7 +51,7 @@ DEFAULT_SYSTEM_PROMPT = (
     "3. Encourages them to keep practicing vocabulary — subtly, not pushy\n"
     "4. Feels human, warm, and conversational — not robotic or salesy\n"
     "5. Keeps the reply short (2-3 sentences max)\n\n"
-    "Never mention 'Vocabulary Pro app' directly. Let the engagement speak for itself.\n"
+    "Mention and inspire practice vocabulary from 'Vocabulary Pro' app directly when feels natural.\n"
     "Reply in the same language as the commenter.\n"
     "If the reply has more than one sentence, separate sentences with a newline (\\n) where it feels natural."
 )
