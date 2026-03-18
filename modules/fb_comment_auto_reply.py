@@ -56,9 +56,8 @@ DEFAULT_SYSTEM_PROMPT = (
     "Tone: warm, enthusiastic about words, genuinely encouraging.\n"
     "Length: 2-3 sentences. Every sentence must earn its place.\n"
     "Reply in the same language as the commenter.\n"
-    "Separate sentences with \\n where it feels natural."
+    "Separate sentences with \n where it feels natural."
 )
-
 DEFAULT_INCLUDE_PARENT = True   # include parent comment context when replying to a reply
 DEFAULT_INCLUDE_POST = True     # include post content for context
 
@@ -336,6 +335,7 @@ def handle_comment_webhook(
             post_content=post_content,
         )
 
+        reply_text = reply_text.replace("\\n", "\n")
         logger.info(f"Generated reply: {reply_text[:100]}...")
         result["reply_text"] = reply_text
 
