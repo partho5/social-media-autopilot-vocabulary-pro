@@ -48,7 +48,7 @@ DEFAULT_SYSTEM_PROMPT = (
     "Reply briefly and naturally to comments."
 )
 DEFAULT_INCLUDE_PARENT = True   # include parent comment context when replying to a reply
-DEFAULT_INCLUDE_POST = False    # include post content for context (slower)
+DEFAULT_INCLUDE_POST = True     # include post content for context
 
 # Facebook Graph API version
 GRAPH_API = "https://graph.facebook.com/v21.0"
